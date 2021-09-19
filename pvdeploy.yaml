@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvdeploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pv
+  template:
+    metadata:
+      labels:
+        app: pv
+    spec:
+      containers:
+      - name: c1
+        image: centos
+        command: ["/bin/bash","-c","sleep 10000"]
+        volumeMounts:
+        - name: pv
+          mountPath: /tmp/persistent
+      volumes:
+      - name: pv
+        persistentVolumeClaim:
+          claimName: pvc

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment
+  labels:
+    app: httpd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+      zone: prod
+      ver: v1.2
+  template:
+    metadata:
+      labels:
+        app: web
+        zone: prod
+        ver: v1.2
+    spec:
+      containers:
+      - name: httpd
+        image: httpd:alpine
+        ports:
+        - containerPort: 80
